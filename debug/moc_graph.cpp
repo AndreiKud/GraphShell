@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Graph_t {
-    QByteArrayData data[5];
-    char stringdata0[56];
+    QByteArrayData data[1];
+    char stringdata0[6];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,15 +31,10 @@ struct qt_meta_stringdata_Graph_t {
     )
 static const qt_meta_stringdata_Graph_t qt_meta_stringdata_Graph = {
     {
-QT_MOC_LITERAL(0, 0, 5), // "Graph"
-QT_MOC_LITERAL(1, 6, 10), // "StructType"
-QT_MOC_LITERAL(2, 17, 8), // "EdgeList"
-QT_MOC_LITERAL(3, 26, 13), // "AdjacencyList"
-QT_MOC_LITERAL(4, 40, 15) // "AdjacencyMatrix"
+QT_MOC_LITERAL(0, 0, 5) // "Graph"
 
     },
-    "Graph\0StructType\0EdgeList\0AdjacencyList\0"
-    "AdjacencyMatrix"
+    "Graph"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,18 +46,14 @@ static const uint qt_meta_data_Graph[] = {
        0,    0, // classinfo
        0,    0, // methods
        0,    0, // properties
-       1,   14, // enums/sets
+       0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
  // enums: name, flags, count, data
-       1, 0x0,    3,   18,
 
  // enum data: key, value
-       2, uint(Graph::EdgeList),
-       3, uint(Graph::AdjacencyList),
-       4, uint(Graph::AdjacencyMatrix),
 
        0        // eod
 };

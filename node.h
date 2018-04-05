@@ -65,7 +65,7 @@ QT_END_NAMESPACE
 class Node : public QGraphicsItem
 {
 public:
-    Node(int index, GraphWidget *graphWidget = nullptr);
+    Node(const QString& name, GraphWidget *graphWidget = nullptr);
 
     void SetGraphWidget(GraphWidget *graphWidget);
     void addEdge(Edge *edge);
@@ -73,7 +73,7 @@ public:
 
     enum { Type = UserType + 1 };
     int type() const override { return Type; }
-    int Index() const { return m_Index; }
+    QString Name() const { return m_sName; }
 
     bool advance();
 
@@ -88,8 +88,8 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    int m_Index;
-    QList<Edge *> edgeList;
+    QString m_sName;
+    QList<Edge*> edgeList;
     QPointF newPos;
     GraphWidget *graph;
 };

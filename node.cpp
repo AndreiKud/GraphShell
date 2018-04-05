@@ -57,8 +57,8 @@
 #include <QPainter>
 #include <QStyleOption>
 
-Node::Node(int index, GraphWidget *graphWidget) :
-    m_Index(index),
+Node::Node(const QString& name, GraphWidget *graphWidget) :
+    m_sName(name),
     graph(graphWidget)
 {
     setFlag(ItemIsMovable);

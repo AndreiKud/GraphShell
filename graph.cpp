@@ -7,10 +7,10 @@ Graph::Graph()
 
 Graph::~Graph()
 {
-    delete[] m_AdjList;
+
 }
 
-void Graph::ReadFromFile(const QString &str, Graph::StructType type)
+void Graph::ReadFromFile(const QString &str, StructType type)
 {
     QFile file(str);
 
@@ -24,15 +24,18 @@ void Graph::ReadFromFile(const QString &str, Graph::StructType type)
 
     switch (type)
     {
-    case Graph::EdgeList:
-        ReadEdgeList(file);
-        break;
-    case Graph::AdjacencyList:
-        ReadAdjacencyList(file);
-        break;
-    case Graph::AdjacencyMatrix:
-        ReadAdjacencyMatrix(file);
-        break;
+        case StructType::EdgeList:
+            ReadEdgeList(file);
+            break;
+        case StructType::AdjacencyList:
+            ReadAdjacencyList(file);
+            break;
+        case StructType::AdjacencyMatrix:
+            ReadAdjacencyMatrix(file);
+            break;
+        case StructType::IncidenceMatrix:
+            ReadAdjacencyMatrix(file);
+            break;
     }
 
     ToAdjacencyList();
@@ -44,17 +47,22 @@ void Graph::ReadEdgeList(QFile& file)
     while (!file.atEnd())
     {
         QString line = file.readLine();
-        QList<QString> vpair = line.split(" ");
-        short ind1 = vpair.first().toShort();
-        short ind2 = vpair.last().toShort();
+        QStringList eInfo = line.split(" ");
+        QString nodeFrom = eInfo[0];
+        QString nodeTo = eInfo[1];
+        double weight = eInfo[2].toDouble();
+
         Node *v1, *v2;
-        v1 = new Node(ind1);
-        v2 = new Node(ind2);
+        v1 = new Node(nodeFrom);
+        v2 = new Node(nodeTo);
 
         m_Nodes.values().append(v1);
         m_Nodes.values().append(v2);
-        m_Edges.values().append(new Edge(v1, v2));
+        Edge* edge = new Edge(v1, v2);
+        edge->SetWeight(weight);
+        m_Edges.values().append(edge);
     };
+    ToAdjacencyList();
 }
 
 void Graph::ReadAdjacencyList(QFile& file)
@@ -83,6 +91,7 @@ void Graph::ReadAdjacencyList(QFile& file)
                 m_Edges.values().append(e);
         }
     };
+    ToAdjacencyList();
 }
 
 void Graph::ReadAdjacencyMatrix(QFile& file)
@@ -111,6 +120,36 @@ void Graph::ReadAdjacencyMatrix(QFile& file)
                 m_Edges.values().append(e);
         }
     };
+    ToAdjacencyList();
+}
+
+void Graph::ReadIncidenceMatrix(QFile &file)
+{
+    while (!file.atEnd())
+    {
+        QString line = file.readLine();
+        Node* v = new Node(m_Nodes.count());
+        m_Nodes.values().append(v);
+
+        QList<short> vlist;
+        foreach (QString vert, line.split(" "))
+        {
+            Edge* e;
+            if (Node* v1 = HasNode(vert.toShort()))
+            {
+                e = new Edge(v, v1);
+            }
+            else
+            {
+                Node* v2 = new Node(vert.toShort());
+                e = new Edge(v, v2);
+            }
+
+            if (!HasEdge(m_Nodes.count(), vert.toShort()))
+                m_Edges.values().append(e);
+        }
+    };
+    ToAdjacencyList();
 }
 
 Node *Graph::HasNode(int ind)
@@ -135,10 +174,11 @@ Edge *Graph::HasEdge(int ind1, int ind2)
 
 void Graph::ToAdjacencyList()
 {
-    m_AdjList = new QSet<int>[m_Edges.count()];
+    m_AdjList.clear();
 
     foreach (Edge* e, m_Edges)
     {
-        m_AdjList[e->sourceNode()->Index()].insert(e->destNode()->Index());
+
+//        m_AdjList[e->sourceNode()->Index()].insert(e->destNode()->Index());
     }
 }
