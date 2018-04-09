@@ -58,8 +58,9 @@
 #include <QStyleOption>
 
 Node::Node(const QString& name, GraphWidget *graphWidget) :
-    m_sName(name),
-    graph(graphWidget)
+    m_sName(name.trimmed()),
+    graph(graphWidget),
+    m_bUsed(false)
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -67,7 +68,12 @@ Node::Node(const QString& name, GraphWidget *graphWidget) :
     setZValue(-1);
 }
 
-void Node::SetGraphWidget(GraphWidget *graphWidget)
+Node::~Node()
+{
+
+}
+
+void Node::setGraphWidget(GraphWidget *graphWidget)
 {
     graph = graphWidget;
 }
@@ -81,6 +87,26 @@ void Node::addEdge(Edge *edge)
 QList<Edge *> Node::edges() const
 {
     return edgeList;
+}
+
+int Node::type() const
+{
+    return Type;
+}
+
+QString Node::getName() const
+{
+    return m_sName;
+}
+
+void Node::setUsed(bool bValue)
+{
+    m_bUsed = bValue;
+}
+
+bool Node::getUsed() const
+{
+    return m_bUsed;
 }
 
 bool Node::advance()

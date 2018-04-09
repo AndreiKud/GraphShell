@@ -25,26 +25,38 @@ public:
     Graph();
     virtual ~Graph();
 
-    void ReadFromFile(const QString& str, StructType type);
-    void ReadEdgeList(QFile& file);
-    void ReadAdjacencyList(QFile& file);
-    void ReadAdjacencyMatrix(QFile& file);
-    void ReadIncidenceMatrix(QFile& file);
+    void readFromFile(const QString& str, StructType type);
+    void readEdgeList(QFile& file);
+    void readAdjacencyList(QFile& file);
+    void readAdjacencyMatrix(QFile& file);
+    void readIncidenceMatrix(QFile& file);
 
+    double radius();
+    double diameter();
+    int power();
+    int nodeCount();
+    int edgeCount();
+    int circuitRank();
+    int connectedComponents();
+    bool isTree();
 
-    Node* HasNode(int ind);
-    Edge* HasEdge(int ind1, int ind2);
-    void ToAdjacencyList();
+    Node* hasNode(const QString& name);
+    Edge* hasEdge(const QString& name1, const QString& name2);
+    void toAdjacencyList();
+    double** toAdjacencyMatrix();
+    double** toDistanceMatrix(double** adjacencyMatrix);
 
 private:
-    QSet<Node*> m_Nodes;
-    QSet<Edge*> m_Edges;
+    void DFS(Node* v);
+    bool isCyclic(Node *v, Node *parent);
+    double* findEccentricity(double** distMatr);
+    void deleteMatrix(double** matr, int cnt);
 
+private:
+    QList<Node*> m_Nodes;
+    QList<Edge*> m_Edges;
     QList<QList<Node*>> m_AdjList;
-//    QSet<int>* m_AdjList;
-
-//    QList<QPair<QString, QString>> m_EdgeList;
-//    QList<QList<short>> m_NodeList;
+    QVector<Node*> m_Comp;
 };
 
 #endif // GRAPHMANAGER_H

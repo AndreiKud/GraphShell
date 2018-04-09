@@ -62,24 +62,33 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
+
 class Node : public QGraphicsItem
 {
 public:
+    enum
+    {
+        Type = UserType + 1
+    };
+
+public:
     Node(const QString& name, GraphWidget *graphWidget = nullptr);
+    ~Node() override;
 
-    void SetGraphWidget(GraphWidget *graphWidget);
+    void setGraphWidget(GraphWidget *graphWidget);
     void addEdge(Edge *edge);
-    QList<Edge *> edges() const;
+    QList<Edge*> edges() const;
 
-    enum { Type = UserType + 1 };
-    int type() const override { return Type; }
-    QString Name() const { return m_sName; }
+    int type() const override;
+    QString getName() const;
 
     bool advance();
-
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    void setUsed(bool bValue);
+    bool getUsed() const;
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
@@ -92,6 +101,7 @@ private:
     QList<Edge*> edgeList;
     QPointF newPos;
     GraphWidget *graph;
+    bool m_bUsed;
 };
 
 #endif // NODE_H

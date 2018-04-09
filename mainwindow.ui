@@ -6,31 +6,302 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>198</width>
-    <height>174</height>
+    <width>292</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="pbRead">
-      <property name="text">
-       <string>Open file</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pbVizualize">
-      <property name="text">
-       <string>Vizualize</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QPushButton" name="pbVizualize">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>320</y>
+      <width>251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Vizualize</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="gbMetrics">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>271</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Metrics</string>
+    </property>
+    <widget class="QLineEdit" name="leConnectedComponent">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>210</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblNodesCnt">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nodes count:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leNodesCnt">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>30</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leEdgesCnt">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>60</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblEdgesCnt">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edges count:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblGraphPower">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Graph Power:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblRadius">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Radius:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leCircuitRank">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>180</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblCircuitRank">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>180</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Circuit Rank:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leRadius">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>150</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leDiameter">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>90</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblDiameter">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Diameter:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblConnectedComponent">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Connected Component:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leGraphPower">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>120</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbCalcMetrics">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Evaluate</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="leIsTree">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>240</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblIsTree">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Is tree:</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>292</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOpen">
+    <property name="title">
+     <string>Load from...</string>
+    </property>
+    <addaction name="actionEdge_List"/>
+    <addaction name="actionAdjacency_List"/>
+    <addaction name="actionIncidence_Matrix"/>
+    <addaction name="actionAdjacency_Matrix"/>
+   </widget>
+   <addaction name="menuOpen"/>
+  </widget>
+  <action name="actionEdge_List">
+   <property name="text">
+    <string>Edge List</string>
+   </property>
+  </action>
+  <action name="actionAdjacency_List">
+   <property name="text">
+    <string>Adjacency List</string>
+   </property>
+  </action>
+  <action name="actionIncidence_Matrix">
+   <property name="text">
+    <string>Incidence Matrix</string>
+   </property>
+  </action>
+  <action name="actionAdjacency_Matrix">
+   <property name="text">
+    <string>Adjacency Matrix</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

@@ -66,6 +66,11 @@ Edge::Edge(Node *sourceNode, Node *destNode)
 //    isArr = qrand() > RAND_MAX / 2;
 }
 
+Edge::~Edge()
+{
+
+}
+
 Node *Edge::sourceNode() const
 {
     return source;

@@ -21,10 +21,18 @@ public:
 private slots:
     void on_pbVizualize_clicked();
 
-    void on_pbRead_clicked();
+    void on_actionEdge_List_triggered();
+
+    void on_actionAdjacency_List_triggered();
+
+    void on_actionIncidence_Matrix_triggered();
+
+    void on_actionAdjacency_Matrix_triggered();
+
+    void on_pbCalcMetrics_clicked();
 
 private:
-    Graph m_GM;
+    Graph m_Graph;
     Ui::MainWindow *ui;
 };
 

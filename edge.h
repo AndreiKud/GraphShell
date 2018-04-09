@@ -57,22 +57,24 @@ class Node;
 
 class Edge : public QGraphicsItem
 {
+    enum { Type = UserType + 2 };
+
 public:
     Edge(Node *sourceNode, Node *destNode);
     ~Edge() override;
 
-    Node *sourceNode() const;
-    Node *destNode() const;
+    Node* sourceNode() const;
+    Node* destNode() const;
 
     void adjust();
 
-    enum { Type = UserType + 2 };
     int type() const override { return Type; }
-    void SetWeight(double rWeight) { m_rWeight = rWeight; }
+    void setWeight(double rWeight) { m_rWeight = rWeight; }
+    double getWeight() { return m_rWeight; }
 
 protected:
     QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
     Node *source, *dest;
@@ -80,7 +82,6 @@ private:
     QPointF sourcePoint;
     QPointF destPoint;
     double arrowSize;
-//    bool isArr;
     double m_rWeight;
 };
 
