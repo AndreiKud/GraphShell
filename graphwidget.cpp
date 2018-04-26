@@ -71,39 +71,6 @@ GraphWidget::GraphWidget(QWidget *parent)
     scale(qreal(1), qreal(1));
     setMinimumSize(400, 400);
     setWindowTitle(tr("Simple Graph"));
-
-//    centerNode = new Node(0, this);
-//    Node *node2 = new Node(1, this);
-//    Node *node3 = new Node(2, this);
-//    Node *node4 = new Node(3, this);
-//    Node *node5 = new Node(5, this);
-//    Node *node6 = new Node(5, this);
-//    Node *node7 = new Node(6, this);
-//    Node *node8 = new Node(7, this);
-//    Node *node9 = new Node(8, this);
-//    scene->addItem(centerNode);
-//    scene->addItem(node2);
-//    scene->addItem(node3);
-//    scene->addItem(node4);
-//    scene->addItem(node5);
-//    scene->addItem(node6);
-//    scene->addItem(node7);
-//    scene->addItem(node8);
-//    scene->addItem(node9);
-////    scene->addItem(new Edge(node1, node2));
-//    scene->addItem(new Edge(node2, node3));
-//    scene->addItem(new Edge(node2, centerNode));
-////    scene->addItem(new Edge(node3, node6));
-//    scene->addItem(new Edge(node4, node5));
-////    scene->addItem(new Edge(node4, centerNode));
-//    scene->addItem(new Edge(centerNode, node6));
-//    scene->addItem(new Edge(centerNode, node8));
-////    scene->addItem(new Edge(node6, node9));
-////    scene->addItem(new Edge(node7, node4));
-//    scene->addItem(new Edge(node8, node7));
-//    scene->addItem(new Edge(node9, node8));
-
-    shuffle();
 }
 
 void GraphWidget::itemMoved()
@@ -172,16 +139,14 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
     painter->drawRect(sceneRect);
 
     // Text
-    QRectF textRect(sceneRect.left() + sceneRect.width() / 2 - 45, sceneRect.top() + 4,
+    QRectF textRect(sceneRect.left() + sceneRect.width() / 2 - 40, sceneRect.top() + 4,
                     sceneRect.width() - 4, sceneRect.height() - 4);
-    QString message(tr("Заголовок"));
+    QString message(tr("Graph"));
 
     QFont font = painter->font();
     font.setBold(true);
     font.setPointSize(12);
     painter->setFont(font);
-//    painter->setPen(Qt::lightGray);
-//    painter->drawText(textRect.translated(2, 2), message);
     painter->setPen(Qt::black);
     painter->drawText(textRect, message);
 }

@@ -55,7 +55,9 @@
 #include <QPainter>
 
 Edge::Edge(Node *sourceNode, Node *destNode)
-    : arrowSize(10), m_rWeight(0.0)
+    : arrowSize(10),
+      m_dWeight(0.0),
+      m_bIsAdditonal(false)
 {
     setAcceptedMouseButtons(nullptr);
     source = sourceNode;
@@ -63,7 +65,6 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     source->addEdge(this);
     dest->addEdge(this);
     adjust();
-//    isArr = qrand() > RAND_MAX / 2;
 }
 
 Edge::~Edge()
@@ -71,12 +72,12 @@ Edge::~Edge()
 
 }
 
-Node *Edge::sourceNode() const
+Node* Edge::sourceNode() const
 {
     return source;
 }
 
-Node *Edge::destNode() const
+Node* Edge::destNode() const
 {
     return dest;
 }
@@ -94,12 +95,12 @@ void Edge::adjust()
     if (length > qreal(20.))
     {
         QPointF edgeOffset((line.dx() * 10) / length, (line.dy() * 10) / length);
-        sourcePoint = line.p1() + edgeOffset;
-        destPoint = line.p2() - edgeOffset;
+        m_SourcePoint = line.p1() + edgeOffset;
+        m_DestPoint = line.p2() - edgeOffset;
     }
     else
     {
-        sourcePoint = destPoint = line.p1();
+        m_SourcePoint = m_DestPoint = line.p1();
     }
 }
 
@@ -108,8 +109,8 @@ QRectF Edge::boundingRect() const
     if (!source || !dest)
         return QRectF();
 
-    return QRectF(sourcePoint, QSizeF(destPoint.x() - sourcePoint.x(),
-                                      destPoint.y() - sourcePoint.y()))
+    return QRectF(m_SourcePoint, QSizeF(m_DestPoint.x() - m_SourcePoint.x(),
+                                      m_DestPoint.y() - m_SourcePoint.y()))
         .normalized();
 }
 
@@ -118,7 +119,7 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     if (!source || !dest)
         return;
 
-    QLineF line(sourcePoint, destPoint);
+    QLineF line(m_SourcePoint, m_DestPoint);
     if (qFuzzyCompare(line.length(), qreal(0.)))
         return;
 
@@ -126,20 +127,39 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter->drawLine(line);
 
+    // Draw the label
+    QPointF textPoint = (m_DestPoint + m_SourcePoint) / 2;
+    QRectF textRect(textPoint.x(), textPoint.y(), 30, 30);
+    QString message(QString::number(m_dWeight));
+    QFont font = painter->font();
+    font.setBold(true);
+    font.setPointSize(12);
+    painter->setFont(font);
+    painter->setPen(Qt::black);
+    painter->drawText(textRect, message);
+
     // Draw the arrows
-
-    double angle = std::atan2(-line.dy(), line.dx());
-
-    QPointF sourceArrowP1 = sourcePoint + QPointF(sin(angle + M_PI / 3) * arrowSize,
-                                                  cos(angle + M_PI / 3) * arrowSize);
-    QPointF sourceArrowP2 = sourcePoint + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize,
-                                                  cos(angle + M_PI - M_PI / 3) * arrowSize);
-    QPointF destArrowP1 = destPoint + QPointF(sin(angle - M_PI / 3) * arrowSize,
-                                              cos(angle - M_PI / 3) * arrowSize);
-    QPointF destArrowP2 = destPoint + QPointF(sin(angle - M_PI + M_PI / 3) * arrowSize,
-                                              cos(angle - M_PI + M_PI / 3) * arrowSize);
-
     painter->setBrush(Qt::black);
-    painter->drawPolygon(QPolygonF() << line.p1() << sourceArrowP1 << sourceArrowP2);
+    double angle = std::atan2(-line.dy(), line.dx());
+    QPointF destArrowP1 = m_DestPoint + QPointF(sin(angle - M_PI / 3) * arrowSize,
+                                              cos(angle - M_PI / 3) * arrowSize);
+    QPointF destArrowP2 = m_DestPoint + QPointF(sin(angle - M_PI + M_PI / 3) * arrowSize,
+                                              cos(angle - M_PI + M_PI / 3) * arrowSize);
     painter->drawPolygon(QPolygonF() << line.p2() << destArrowP1 << destArrowP2);
+
+    //    QPointF sourceArrowP1 = m_SourcePoint + QPointF(sin(angle + M_PI / 3) * arrowSize,
+    //                                                  cos(angle + M_PI / 3) * arrowSize);
+    //    QPointF sourceArrowP2 = m_SourcePoint + QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize,
+    //                                                  cos(angle + M_PI - M_PI / 3) * arrowSize);
+    //    painter->drawPolygon(QPolygonF() << line.p1() << sourceArrowP1 << sourceArrowP2);
+}
+
+bool Edge::getIsAdditonal() const
+{
+    return m_bIsAdditonal;
+}
+
+void Edge::setIsAdditonal(bool bIsAdditonal)
+{
+    m_bIsAdditonal = bIsAdditonal;
 }

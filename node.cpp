@@ -56,11 +56,13 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include <QTextItem>
 
-Node::Node(const QString& name, GraphWidget *graphWidget) :
+Node::Node(const QString& name, int index, GraphWidget *graphWidget) :
     m_sName(name.trimmed()),
     graph(graphWidget),
-    m_bUsed(false)
+    m_bUsed(false),
+    m_Index(index)
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -84,9 +86,9 @@ void Node::addEdge(Edge *edge)
     edge->adjust();
 }
 
-QList<Edge *> Node::edges() const
+QList<Edge*>* Node::edges()
 {
-    return edgeList;
+    return &edgeList;
 }
 
 int Node::type() const
@@ -121,13 +123,17 @@ bool Node::advance()
 QRectF Node::boundingRect() const
 {
     qreal adjust = 2;
-    return QRectF( -10 - adjust, -10 - adjust, 23 + adjust, 23 + adjust);
+    qreal base1 = 10;
+    qreal base2 = 23;
+    return QRectF( -base1 - adjust, -base1 - adjust - 10, base2 + adjust, base2 + adjust + 10);
 }
 
 QPainterPath Node::shape() const
 {
     QPainterPath path;
-    path.addEllipse(-10, -10, 20, 20);
+    qreal base1 = 10;
+    qreal base2 = 20;
+    path.addEllipse(-base1, -base1 - 10, base2, base2 + 10);
     return path;
 }
 
@@ -154,7 +160,15 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
     painter->setPen(QPen(Qt::black, 0));
     painter->drawEllipse(-8, -8, 15, 15);
-//    painter->drawText(-8, -8, 15, 15, 0, "Hui");
+
+    // Draw the label
+    QString message(m_sName);
+    QFont font = painter->font();
+    font.setBold(true);
+    font.setPointSize(10);
+    painter->setFont(font);
+    painter->setPen(Qt::black);
+    painter->drawText(-8, -24, 15, 30, 0, message);
 }
 
 QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -164,7 +178,6 @@ QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
     case ItemPositionHasChanged:
         foreach (Edge *edge, edgeList)
             edge->adjust();
-        graph->itemMoved();
         break;
     default:
         break;
@@ -175,12 +188,30 @@ QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
 
 void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    scene()->update();
     update();
     QGraphicsItem::mousePressEvent(event);
 }
 
 void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    scene()->update();
     update();
     QGraphicsItem::mouseReleaseEvent(event);
+}
+
+void Node::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    scene()->update();
+    QGraphicsItem::mouseMoveEvent(event);
+}
+
+int Node::getIndex() const
+{
+    return m_Index;
+}
+
+void Node::setIndex(int Index)
+{
+    m_Index = Index;
 }

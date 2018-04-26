@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QCursor>
 
 #include "graphwidget.h"
 #include "graph.h"
@@ -18,6 +20,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void log(const QString& text);
+    void clear();
+
 private slots:
     void on_pbVizualize_clicked();
 
@@ -31,9 +37,27 @@ private slots:
 
     void on_pbCalcMetrics_clicked();
 
+    void on_rbOrient_clicked();
+
+    void on_rbNotOrient_clicked();
+
+    void on_pbAddNode_clicked();
+
+    void on_pbDeleteNode_clicked();
+
+    void on_pbAddEdge_clicked();
+
+    void on_pbDeleteEdge_clicked();
+
+    void on_pbDFS_clicked();
+
+private:
+    void showErr(int errCode);
+
 private:
     Graph m_Graph;
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui = nullptr;
+    GraphWidget* graph = nullptr;
 };
 
 #endif // MAINWINDOW_H

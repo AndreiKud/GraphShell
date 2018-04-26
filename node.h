@@ -72,12 +72,12 @@ public:
     };
 
 public:
-    Node(const QString& name, GraphWidget *graphWidget = nullptr);
+    Node(const QString& name, int index, GraphWidget *graphWidget = nullptr);
     ~Node() override;
 
     void setGraphWidget(GraphWidget *graphWidget);
     void addEdge(Edge *edge);
-    QList<Edge*> edges() const;
+    QList<Edge*>* edges();
 
     int type() const override;
     QString getName() const;
@@ -87,21 +87,26 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    void setUsed(bool bValue);
     bool getUsed() const;
+    void setUsed(bool bValue);
+
+    int getIndex() const;
+    void setIndex(int Index);
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     QString m_sName;
     QList<Edge*> edgeList;
     QPointF newPos;
-    GraphWidget *graph;
+    GraphWidget* graph = nullptr;
     bool m_bUsed;
+    int m_Index;
 };
 
 #endif // NODE_H
